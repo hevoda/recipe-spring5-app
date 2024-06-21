@@ -1,15 +1,16 @@
 package guru.springframework.domain;
 
 import lombok.Data;
-import org.hibernate.annotations.Cascade;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = {"difficulty", "ingredients","notes"})
 @Entity
-public class Recipe {
+public final class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
