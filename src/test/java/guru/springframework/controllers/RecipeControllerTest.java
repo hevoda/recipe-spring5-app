@@ -9,10 +9,9 @@ import org.mockito.Mock;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -31,7 +30,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    public void testGetRecipe() throws Exception {
+    void testGetRecipe() throws Exception {
         Recipe recipe = new Recipe();
         recipe.setId(1L);
 
