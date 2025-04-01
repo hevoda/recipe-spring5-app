@@ -1,4 +1,4 @@
-package guru.springframework.bootStrap;
+package guru.springframework.bootstrap;
 
 import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Slf4j
 @Component
-public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEvent> {
+public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     @Transactional
@@ -30,7 +30,7 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
 
-    public RecipeBootStrap(CategoryRepository categoryRepository, RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
+    public RecipeBootstrap(CategoryRepository categoryRepository, RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.categoryRepository = categoryRepository;
         this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
@@ -42,36 +42,32 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
          //Get UOM
         Optional<UnitOfMeasure> eachUomOptional = unitOfMeasureRepository.findByDescription("Each");
 
-        if(!eachUomOptional.isPresent()){
+        if(eachUomOptional.isEmpty()){
             throw new RuntimeException("Excepted UOM Not found");
         }
 
         Optional<UnitOfMeasure> tableSpoonOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
 
-        if(!tableSpoonOptional.isPresent()){
+        if(tableSpoonOptional.isEmpty()){
             throw new RuntimeException("Excepted UOM Not found");
         }
 
         Optional<UnitOfMeasure> teaSpoonOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
 
-        if(!tableSpoonOptional.isPresent()){
-            throw new RuntimeException("Excepted UOM Not found");
-        }
-
         Optional<UnitOfMeasure> dashOptional = unitOfMeasureRepository.findByDescription("Dash");
 
-        if(!dashOptional.isPresent()){
+        if(dashOptional.isEmpty()){
             throw new RuntimeException("Excepted UOM Not found");
         }
         Optional<UnitOfMeasure> pintOptional = unitOfMeasureRepository.findByDescription("Pint");
 
-        if(!pintOptional.isPresent()){
+        if(pintOptional.isEmpty()){
             throw new RuntimeException("Excepted UOM Not found");
         }
 
         Optional<UnitOfMeasure> cupOptional = unitOfMeasureRepository.findByDescription("Cup");
 
-        if(!cupOptional.isPresent()){
+        if(cupOptional.isEmpty()){
             throw new RuntimeException("Excepted UOM Not found");
         }
 
@@ -86,16 +82,10 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
 
         //Get Categories
         Optional<Category> americanCategoryOptional = categoryRepository.findByDescription("American");
-        if(!americanCategoryOptional.isPresent()){
+        if(americanCategoryOptional.isEmpty()){
             throw new RuntimeException("Excepted Category Not Found");
         }
-
         Optional<Category> mexicanCategoryOptional = categoryRepository.findByDescription("Mexican");
-        if(!americanCategoryOptional.isPresent()){
-            throw new RuntimeException("Excepted Category Not Found");
-        }
-
-
         Category americanCategory = americanCategoryOptional.get();
         Category mexicanCategory = mexicanCategoryOptional.get();
 
@@ -138,6 +128,9 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
 
         guacRecipe.getCategories().add(americanCategory);
         guacRecipe.getCategories().add(mexicanCategory);
+        guacRecipe.setUrl("http://www.simplyrecipes.com/recipes/perfect_guacamole/");
+        guacRecipe.setServings(4);
+        guacRecipe.setSource("Simply Recipes");
 
         //add to return list
         recipes.add(guacRecipe);
@@ -196,6 +189,10 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
 
         tacosRecipe.getCategories().add(americanCategory);
         tacosRecipe.getCategories().add(mexicanCategory);
+
+        tacosRecipe.setUrl("http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
+        tacosRecipe.setServings(4);
+        tacosRecipe.setSource("Simply Recipes");
 
         recipes.add(tacosRecipe);
         return recipes;
